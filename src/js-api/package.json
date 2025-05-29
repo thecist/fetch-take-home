@@ -1,0 +1,24 @@
+{
+  "name": "fetch-take-home-js-api",
+  "version": "1.0.0",
+  "description": "JS API for Fetch take home assessment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thecist/fetch-take-home.git"
+  },
+  "author": "Tayomide",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thecist/fetch-take-home/issues"
+  },
+  "homepage": "https://github.com/thecist/fetch-take-home#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
