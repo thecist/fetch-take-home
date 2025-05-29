@@ -13,5 +13,5 @@
       ]
     }
   },
-  "postCreateCommand": "echo DevContainer ready"
+  "postCreateCommand": "./scripts/docker/setup-api.sh"
 }
