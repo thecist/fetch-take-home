@@ -1,0 +1,20 @@
+FROM node:18-bullseye as nodebase
+WORKDIR /app
+COPY . .
+RUN apt-get update && apt-get install -y python3 python3-pip
+
+# Install both deps: Conditional installation is bad cos of layer caching
+RUN cd src/js-api && npm install
+RUN cd src/py-api && pip3 install -r requirements.txt
+
+# Make scripts executable
+RUN chmod +x docker/start-py.sh
+RUN chmod +x docker/start-js.sh
+
+# Conditional runtime execution: Runs at runtime, no layer caching issues
+CMD ["sh", "-c", "\
+  if [ \"$RUNTIME\" = \"python\" ]; then \
+    ./docker/start-python.sh; \
+  else \
+    ./docker/start-js.sh; \
+  fi"]
