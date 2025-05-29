@@ -8,13 +8,13 @@ RUN cd src/js-api && npm install
 RUN cd src/py-api && pip3 install -r requirements.txt
 
 # Make scripts executable
-RUN chmod +x docker/start-py.sh
-RUN chmod +x docker/start-js.sh
+RUN chmod +x scripts/docker/start-py.sh
+RUN chmod +x scripts/docker/start-js.sh
 
 # Conditional runtime execution: Runs at runtime, no layer caching issues
 CMD ["sh", "-c", "\
   if [ \"$RUNTIME\" = \"python\" ]; then \
-    ./docker/start-python.sh; \
+    ./scripts/docker/start-python.sh; \
   else \
-    ./docker/start-js.sh; \
+    ./scripts/docker/start-js.sh; \
   fi"]
