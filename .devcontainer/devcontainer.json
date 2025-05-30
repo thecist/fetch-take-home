@@ -5,9 +5,13 @@
   },
   "workspaceFolder": "/app",
   "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind",
+  "runArgs": ["-p", "3000:3000"],
   "customizations": {
     "vscode": {
-      "settings": {},
+      "settings": {
+        "remote.autoForwardPorts": true,
+        "remote.autoForwardPortsSource": "output"
+      },
       "extensions": [
         "ms-python.python",
         "dbaeumer.vscode-eslint"
