@@ -75,8 +75,9 @@ async def get_receipt_points(id: str = Path(
 
 # Fallback route handler for 404s
 @app.exception_handler(StarletteHTTPException)
-async def custom_http_exception_handler(exc: StarletteHTTPException):
-  if exc.status_code == 404:
+async def custom_http_exception_handler(request: Request, exc: StarletteHTTPException):
+  print(exc.status_code, exc.detail)
+  if exc.status_code == 404 and exc.detail == "Not Found":
     return JSONResponse(
       status_code=404,
       content={
