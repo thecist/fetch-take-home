@@ -64,8 +64,13 @@ async def get_receipt_points(id: str = Path(
   examples='adb6b560-0eef-42bc-9d16-df48f30e89b2',
   pattern=r'^\S+$'
 )) -> ReceiptPointResponse:
-  # Dummy logic
-  return ReceiptPointResponse(points=100)
+  if id not in receipt_store:
+    raise StarletteHTTPException(status_code=404, detail="Receipt not found")
+  if id not in point_cache:
+    points = store_and_calculate(id, receipt=receipt_store[id])
+  else:
+    points = point_cache[id]
+  return ReceiptPointResponse(points=points)
 
 # Fallback route handler for 404s
 @app.exception_handler(StarletteHTTPException)
