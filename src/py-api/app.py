@@ -24,6 +24,9 @@ def store_and_calculate(receipt_id: str, receipt: Receipt):
   points = 0
 
   # TODO: Add comments for each step
+  # TODO: Create a function for each step
+  # TODO: Add docstrings
+  # TODO: Complete OpenAPI schema transfer when up(description etc)
   for char in receipt.retailer:
     if char.isalnum():
       points += 1
