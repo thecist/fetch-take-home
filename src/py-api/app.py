@@ -47,8 +47,14 @@ def store_and_calculate(receipt_id: str, receipt: Receipt):
   point_cache[receipt_id] = points
   return points
 
+@app.post("/receipts/process", response_model=ReceiptProcessResponse)
+async def process_receipt(receipt: Receipt, background_tasks: BackgroundTasks) -> ReceiptProcessResponse:
+  receipt_id = str(uuid.uuid4())
+
   # Performs post-processing in the background, reducing response time
   background_tasks.add_task(store_and_calculate, receipt_id, receipt)
+
+  # Return the receipt ID immediately
   return ReceiptProcessResponse(id=receipt_id)
 
 @app.get("/receipts/{id}/points", response_model=ReceiptPointResponse)
