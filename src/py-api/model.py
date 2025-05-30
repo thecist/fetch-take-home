@@ -43,7 +43,7 @@ class Receipt(BaseModel):
     ...,
     description='The time of the purchase printed on the receipt. 24-hour time expected.',
     example='13:01',
-    
+    alias='purchaseTime'
   )
   items: List[Item] = Field(..., min_items=1)
   total: str = Field(
