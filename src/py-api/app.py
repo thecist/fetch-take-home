@@ -21,30 +21,34 @@ point_cache = {}
 def store_and_calculate(receipt_id: str, receipt: Receipt):
   # Save receipt and points in memory
   receipt_store[receipt_id] = receipt
+  points = 0
 
   # TODO: Add comments for each step
   for char in receipt.retailer:
     if char.isalnum():
       points += 1
   
-  total_int = int(receipt.total)
-  if math.floor(total_int) == total_int:
+  total_float = float(receipt.total)
+  if math.floor(total_float) == total_float:
     points += 50
-  
-  if total_int % 0.25 == 0:
+
+  if total_float % 0.25 == 0:
     points += 25
 
   for i, item in enumerate(receipt.items):
     description_length = len(item.short_description.strip())
     if description_length % 3 == 0:
-      points = math.ceil(int(item.price) * 0.2)
+      points += math.ceil(float(item.price) * 0.2)
     if i % 2 == 1:
-      points += 1
+      points += 5
 
   if receipt.purchase_date.day % 2 == 1:
     points += 6
-  if receipt.purchase_time.hour >2 and receipt.purchase_time.hour < 4:
+
+  receipt_time = receipt.purchase_time.hour * 60 + receipt.purchase_time.minute
+  if receipt_time > 14 * 60 and receipt_time < 16 * 60:
     points += 10
+
   point_cache[receipt_id] = points
   return points
 
