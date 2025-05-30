@@ -15,6 +15,21 @@ PORT = int(os.getenv("PORT", 8000))
 async def root():
   return {"message": "Hello World"}
 
+@app.post("/receipts/process", response_model=ReceiptProcessResponse)
+async def process_receipt(receipt: Receipt) -> ReceiptProcessResponse:
+  # Dummy logic
+  return ReceiptProcessResponse(id="some-generated-id")
+
+@app.get("/receipts/{id}/points", response_model=ReceiptPointResponse)
+async def get_receipt_points(id: str = Path(
+  ...,
+  description='The ID assigned to the receipt.',
+  example='adb6b560-0eef-42bc-9d16-df48f30e89b2',
+  pattern=r'^\S+$'
+)) -> ReceiptPointResponse:
+  # Dummy logic
+  return ReceiptPointResponse(points=100)
+
 # Fallback route handler for 404s
 @app.exception_handler(StarletteHTTPException)
 async def custom_http_exception_handler(exc: StarletteHTTPException):
