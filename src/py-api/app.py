@@ -66,7 +66,7 @@ async def process_receipt(receipt: Receipt, background_tasks: BackgroundTasks) -
 async def get_receipt_points(id: str = Path(
   ...,
   description='The ID assigned to the receipt.',
-  examples='adb6b560-0eef-42bc-9d16-df48f30e89b2',
+  example='adb6b560-0eef-42bc-9d16-df48f30e89b2',
   pattern=r'^\S+$'
 )) -> ReceiptPointResponse:
   if id not in receipt_store:
