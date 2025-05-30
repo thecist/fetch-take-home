@@ -14,5 +14,5 @@
       ]
     }
   },
-  "postCreateCommand": "./scripts/docker/setup-api.sh"
+  "postCreateCommand": "/app/scripts/docker/setup-api.sh"
 }
