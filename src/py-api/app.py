@@ -17,7 +17,7 @@ async def root():
 
 # Fallback route handler for 404s
 @app.exception_handler(StarletteHTTPException)
-async def custom_http_exception_handler(request: Request, exc: StarletteHTTPException):
+async def custom_http_exception_handler(exc: StarletteHTTPException):
   if exc.status_code == 404:
     return JSONResponse(
       status_code=404,
