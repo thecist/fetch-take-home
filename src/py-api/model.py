@@ -2,24 +2,23 @@
 #   filename:  api.yaml
 #   timestamp: 2025-05-29T23:39:53+00:00
 
-from __future__ import annotations
-
+import re
 from datetime import date, time
 # Pattern needs to be imported from typing for Pydantic to recognize it
 # correctly in the Field pattern argument.
 from typing import List, Pattern
 
-from pydantic import BaseModel, Field, constr
+from pydantic import BaseModel, Field
 
 class Item(BaseModel):
-  short_description: constr = Field(
+  short_description: str = Field(
     ...,
     description='The Short Product Description for the item.',
     example='Mountain Dew 12PK',
     pattern=r'^[\w\s\-]+$',
     alias='shortDescription'
   )
-  price: constr = Field(
+  price: str = Field(
     ...,
     description='The total price payed for this item.',
     example='6.49',
@@ -28,7 +27,7 @@ class Item(BaseModel):
 
 
 class Receipt(BaseModel):
-  retailer: constr = Field(
+  retailer: str = Field(
     ...,
     description='The name of the retailer or store the receipt is from.',
     example='M&M Corner Market',
@@ -47,7 +46,7 @@ class Receipt(BaseModel):
     
   )
   items: List[Item] = Field(..., min_items=1)
-  total: constr = Field(
+  total: str = Field(
     ...,
     description='The total amount paid on the receipt.',
     example='6.49',
@@ -55,7 +54,7 @@ class Receipt(BaseModel):
   )
 
 class ReceiptProcessResponse(BaseModel):
-  id: constr = Field(
+  id: str = Field(
     ...,
     description='The ID assigned to the receipt.',
     example='adb6b560-0eef-42bc-9d16-df48f30e89b2',
