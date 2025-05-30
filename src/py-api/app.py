@@ -3,6 +3,7 @@ import os
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from model import Receipt, ReceiptProcessResponse, ReceiptPointResponse
 
 app = FastAPI()
 PORT = int(os.getenv("PORT", 8000))
