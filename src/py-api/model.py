@@ -46,7 +46,23 @@ class Receipt(BaseModel):
   )
   items: List[Item] = Field(..., min_items=1)
   total: constr = Field(
-    ..., description='The total amount paid on the receipt.',
+    ...,
+    description='The total amount paid on the receipt.',
     example='6.49',
     regex=r'^\d+\.\d{2}$'
+  )
+
+class ReceiptProcessResponse(BaseModel):
+  id: constr = Field(
+    ...,
+    description='The ID assigned to the receipt.',
+    example='adb6b560-0eef-42bc-9d16-df48f30e89b2',
+    regex=r'^\S+$'
+  )
+
+class ReceiptPointResponse(BaseModel):
+  points: int = Field(
+    ...,
+    description='The number of points awarded.',
+    example=100
   )
