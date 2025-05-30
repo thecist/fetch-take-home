@@ -5,7 +5,7 @@ set -e
 echo "Loading environment variables from .env file..."
 
 if [ -f .env ]; then
-  export $(grep -v '^#' .env | xargs)
+  export $(grep -v '^#' .env | tr -d '\r' | xargs)
 fi
 
 # Set fallback values
