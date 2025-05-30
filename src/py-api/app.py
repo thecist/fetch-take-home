@@ -2,6 +2,7 @@ import uvicorn
 import os
 import uuid
 import math
+from fastapi import FastAPI, Path, BackgroundTasks
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from model import Receipt, ReceiptProcessResponse, ReceiptPointResponse
