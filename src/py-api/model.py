@@ -10,11 +10,12 @@ from typing import List
 from pydantic import BaseModel, Field, constr
 
 class Item(BaseModel):
-  shortDescription: constr = Field(
+  short_description: constr = Field(
     ...,
     description='The Short Product Description for the item.',
     example='Mountain Dew 12PK',
-    regex=r'^[\w\s\-]+$'
+    regex=r'^[\w\s\-]+$',
+    alias='shortDescription'
   )
   price: constr = Field(
     ...,
@@ -31,15 +32,17 @@ class Receipt(BaseModel):
     example='M&M Corner Market',
     regex=r'^[\w\s\-&]+$'
   )
-  purchaseDate: date = Field(
+  purchase_date: date = Field(
     ...,
     description='The date of the purchase printed on the receipt.',
-    example='2022-01-01'
+    example='2022-01-01',
+    alias='purchaseDate'
   )
-  purchaseTime: time = Field(
+  purchase_time: time = Field(
     ...,
     description='The time of the purchase printed on the receipt. 24-hour time expected.',
-    example='13:01'
+    example='13:01',
+    
   )
   items: List[Item] = Field(..., min_items=1)
   total: constr = Field(
