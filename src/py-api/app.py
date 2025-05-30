@@ -47,6 +47,8 @@ def store_and_calculate(receipt_id: str, receipt: Receipt):
   point_cache[receipt_id] = points
   return points
 
+  # Performs post-processing in the background, reducing response time
+  background_tasks.add_task(store_and_calculate, receipt_id, receipt)
   return ReceiptProcessResponse(id=receipt_id)
 
 @app.get("/receipts/{id}/points", response_model=ReceiptPointResponse)
