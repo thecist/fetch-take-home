@@ -10,10 +10,9 @@ PORT = int(os.getenv("PORT", 8000))
 
 # @app.post("/receipts/process")
 # async def process_receipt()
-  
-@app.get("/")
-async def root():
-  return {"message": "Hello World"}
+# In-memory storage for receipts and their points
+receipt_store = {}
+point_cache = {}
 
 @app.post("/receipts/process", response_model=ReceiptProcessResponse)
 async def process_receipt(receipt: Receipt) -> ReceiptProcessResponse:
