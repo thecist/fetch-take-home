@@ -1,5 +1,6 @@
 import uvicorn
 import os
+import uuid
 from fastapi import FastAPI, Path
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -16,8 +17,12 @@ point_cache = {}
 
 @app.post("/receipts/process", response_model=ReceiptProcessResponse)
 async def process_receipt(receipt: Receipt) -> ReceiptProcessResponse:
-  # Dummy logic
-  return ReceiptProcessResponse(id="some-generated-id")
+  receipt_id = str(uuid.uuid4())
+
+  # Save receipt and points in memory
+  receipt_store[receipt_id] = receipt
+
+  return ReceiptProcessResponse(id=receipt_id)
 
 @app.get("/receipts/{id}/points", response_model=ReceiptPointResponse)
 async def get_receipt_points(id: str = Path(
