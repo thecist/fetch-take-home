@@ -5,7 +5,9 @@
 from __future__ import annotations
 
 from datetime import date, time
-from typing import List
+# Pattern needs to be imported from typing for Pydantic to recognize it
+# correctly in the Field pattern argument.
+from typing import List, Pattern
 
 from pydantic import BaseModel, Field, constr
 
@@ -14,14 +16,14 @@ class Item(BaseModel):
     ...,
     description='The Short Product Description for the item.',
     example='Mountain Dew 12PK',
-    regex=r'^[\w\s\-]+$',
+    pattern=r'^[\w\s\-]+$',
     alias='shortDescription'
   )
   price: constr = Field(
     ...,
     description='The total price payed for this item.',
     example='6.49',
-    regex=r'^\d+\.\d{2}$'
+    pattern=r'^\d+\.\d{2}$'
   )
 
 
@@ -30,7 +32,7 @@ class Receipt(BaseModel):
     ...,
     description='The name of the retailer or store the receipt is from.',
     example='M&M Corner Market',
-    regex=r'^[\w\s\-&]+$'
+    pattern=r'^[\w\s\-&]+$'
   )
   purchase_date: date = Field(
     ...,
@@ -49,7 +51,7 @@ class Receipt(BaseModel):
     ...,
     description='The total amount paid on the receipt.',
     example='6.49',
-    regex=r'^\d+\.\d{2}$'
+    pattern=r'^\d+\.\d{2}$'
   )
 
 class ReceiptProcessResponse(BaseModel):
@@ -57,7 +59,7 @@ class ReceiptProcessResponse(BaseModel):
     ...,
     description='The ID assigned to the receipt.',
     example='adb6b560-0eef-42bc-9d16-df48f30e89b2',
-    regex=r'^\S+$'
+    pattern=r'^\S+$'
   )
 
 class ReceiptPointResponse(BaseModel):
