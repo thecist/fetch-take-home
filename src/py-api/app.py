@@ -24,7 +24,7 @@ async def process_receipt(receipt: Receipt) -> ReceiptProcessResponse:
 async def get_receipt_points(id: str = Path(
   ...,
   description='The ID assigned to the receipt.',
-  example='adb6b560-0eef-42bc-9d16-df48f30e89b2',
+  examples='adb6b560-0eef-42bc-9d16-df48f30e89b2',
   pattern=r'^\S+$'
 )) -> ReceiptPointResponse:
   # Dummy logic
