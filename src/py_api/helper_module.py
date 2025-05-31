@@ -74,6 +74,7 @@ def store_and_calculate(receipt_id: str, receipt: Receipt, receipt_store: dict, 
   # TODO: Complete OpenAPI schema transfer when up(description etc)
   # TODO: Write unit tests and integration tests
   # TODO: Add logging
+  # TODO: Make python -m pip install equal pip
 
   # Convert total to float for calculations
   total = float(receipt.total)
