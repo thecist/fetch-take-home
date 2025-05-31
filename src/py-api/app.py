@@ -1,3 +1,19 @@
+
+"""
+This module implements a FastAPI application for processing and scoring receipts.
+Endpoints:
+- POST /receipts/process: Accepts a receipt, processes it asynchronously, and returns a unique receipt ID.
+- GET /receipts/{id}/points: Returns the calculated points for a given receipt ID.
+- Custom 404 handler: Returns a friendly message for undefined routes.
+Functions:
+- store_and_calculate(receipt_id: str, receipt: Receipt) -> int:
+  Stores the receipt and calculates points based on retailer name, total amount, item descriptions, purchase date, and time.
+  Points are cached in-memory for quick retrieval.
+Notes:
+- In-memory dictionaries are used for storage and caching (not suitable for production).
+- Receipt and response models are imported from the local 'model' module.
+- The application is intended for demonstration and assessment purposes.
+"""
 import uvicorn
 import os
 import uuid
