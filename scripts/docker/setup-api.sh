@@ -23,7 +23,7 @@ fi
 echo "Setting up API..."
 
 cd src/js-api && npm install
-cd ../../src/py-api && pip3 install -r requirements.txt
+cd ../../src/py_api && pip3 install -r requirements.txt
 
 cd ../../
 
