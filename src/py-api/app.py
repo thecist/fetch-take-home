@@ -1,4 +1,3 @@
-
 """
 This module implements a FastAPI application for processing and scoring receipts.
 Endpoints:
@@ -17,7 +16,6 @@ Notes:
 import uvicorn
 import os
 import uuid
-import math
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi import FastAPI, Path, BackgroundTasks, Request
 from fastapi.responses import JSONResponse
