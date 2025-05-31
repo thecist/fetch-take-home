@@ -2,7 +2,6 @@
 #   filename:  api.yaml
 #   timestamp: 2025-05-29T23:39:53+00:00
 
-import re
 from datetime import date, time
 # Pattern needs to be imported from typing for Pydantic to recognize it
 # correctly in the Field pattern argument.
