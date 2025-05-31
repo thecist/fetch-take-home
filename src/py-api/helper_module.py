@@ -1,7 +1,7 @@
 from model import Receipt, Item
 from typing import List
 from math import ceil, floor
-from datetime import datetime
+from datetime import date, time
 
 receipt_store = {}
 point_cache = {}
@@ -34,11 +34,11 @@ def calculate_item_description_points(items: List[Item]) -> int:
       points += ceil(float(item.price) * 0.2)
   return points
 
-def calculate_odd_day_points(purchase_date) -> int:
+def calculate_odd_day_points(purchase_date: date) -> int:
   """6 points if the day is odd."""
   return 6 if purchase_date.day % 2 == 1 else 0
 
-def calculate_afternoon_purchase_points(purchase_time) -> int:
+def calculate_afternoon_purchase_points(purchase_time: time) -> int:
   """
   10 points if purchase time is after 2:00 PM and before 4:00 PM.
   Time is 24-hour format.
