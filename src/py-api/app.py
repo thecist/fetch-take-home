@@ -13,6 +13,7 @@ PORT = int(os.getenv("PORT", 8000))
 # @app.post("/receipts/process")
 # async def process_receipt()
 # In-memory storage for receipts and their points
+# Note: In a production environment, I would use a database and redis for cache
 receipt_store = {}
 point_cache = {}
 
@@ -66,6 +67,8 @@ async def process_receipt(receipt: Receipt, background_tasks: BackgroundTasks) -
   Returns:
     ReceiptProcessResponse: Response object containing the generated receipt ID.
   """
+
+  # Create a unique ID for the receipt
   receipt_id = str(uuid.uuid4())
 
   # Performs post-processing in the background, reducing response time
@@ -92,11 +95,17 @@ async def get_receipt_points(id: str = Path(
   Path Parameters:
     id (str): The ID assigned to the receipt (example: 'adb6b560-0eef-42bc-9d16-df48f30e89b2').
   """
+  
+  # Check if the receipt ID exists in the store
   if id not in receipt_store:
     raise StarletteHTTPException(status_code=404, detail="Receipt not found")
+  # If the receipt ID exists, check if points are already cached
+  # If not cached, calculate and store the points
   if id not in point_cache:
     points = store_and_calculate(id, receipt=receipt_store[id])
+  # If points are cached, retrieve them
   else:
+  # Return the points in the response model
     points = point_cache[id]
   return ReceiptPointResponse(points=points)
 
@@ -113,6 +122,8 @@ async def custom_http_exception_handler(request: Request, exc: StarletteHTTPExce
   Returns:
     JSONResponse: A JSON response with appropriate status code and error details.
   """
+
+  # If the exception is a 404 with "Not Found", return a custom message
   if exc.status_code == 404 and exc.detail == "Not Found":
     return JSONResponse(
       status_code=404,
@@ -121,6 +132,8 @@ async def custom_http_exception_handler(request: Request, exc: StarletteHTTPExce
         "message": "This endpoint isn't part of the take-home assessment. [Insert cute cat gif here]"
       },
     )
+  
+  # For all other exceptions, return the default error response
   return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
 
 
