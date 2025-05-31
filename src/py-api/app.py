@@ -6,6 +6,8 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi import FastAPI, Path, BackgroundTasks, Request
 from fastapi.responses import JSONResponse
 from model import Receipt, ReceiptProcessResponse, ReceiptPointResponse
+from helper_module import store_and_calculate
+
 app = FastAPI(
   title="Receipt Processor",
   description="A simple receipt processor",
@@ -43,7 +45,7 @@ async def process_receipt(receipt: Receipt, background_tasks: BackgroundTasks) -
   receipt_id = str(uuid.uuid4())
 
   # Performs post-processing in the background, reducing response time
-  background_tasks.add_task(store_and_calculate, receipt_id, receipt)
+  background_tasks.add_task(store_and_calculate, receipt_id, receipt, receipt_store, point_cache)
 
   # Return the receipt ID immediately
   return ReceiptProcessResponse(id=receipt_id)
