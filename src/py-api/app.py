@@ -58,6 +58,14 @@ def store_and_calculate(receipt_id: str, receipt: Receipt):
 
 @app.post("/receipts/process", response_model=ReceiptProcessResponse)
 async def process_receipt(receipt: Receipt, background_tasks: BackgroundTasks) -> ReceiptProcessResponse:
+  """
+  Asynchronously processes a receipt by generating a unique receipt ID, scheduling background post-processing, and returning the receipt ID.
+  Args:
+    receipt (Receipt): The receipt object to be processed.
+    background_tasks (BackgroundTasks): FastAPI background tasks manager for scheduling post-processing.
+  Returns:
+    ReceiptProcessResponse: Response object containing the generated receipt ID.
+  """
   receipt_id = str(uuid.uuid4())
 
   # Performs post-processing in the background, reducing response time
@@ -73,6 +81,17 @@ async def get_receipt_points(id: str = Path(
   example='adb6b560-0eef-42bc-9d16-df48f30e89b2',
   pattern=r'^\S+$'
 )) -> ReceiptPointResponse:
+  """
+  Retrieve the points associated with a specific receipt by its ID.
+  Args:
+    id (str): The unique identifier assigned to the receipt. Must be a non-whitespace string.
+  Returns:
+    ReceiptPointResponse: An object containing the calculated points for the specified receipt.
+  Raises:
+    StarletteHTTPException: If the receipt with the given ID is not found (404 error).
+  Path Parameters:
+    id (str): The ID assigned to the receipt (example: 'adb6b560-0eef-42bc-9d16-df48f30e89b2').
+  """
   if id not in receipt_store:
     raise StarletteHTTPException(status_code=404, detail="Receipt not found")
   if id not in point_cache:
@@ -84,7 +103,16 @@ async def get_receipt_points(id: str = Path(
 # Fallback route handler for 404s
 @app.exception_handler(StarletteHTTPException)
 async def custom_http_exception_handler(request: Request, exc: StarletteHTTPException):
-  print(exc.status_code, exc.detail)
+  """
+  Custom HTTP exception handler for FastAPI/Starlette applications.
+  Handles 404 "Not Found" errors with a custom JSON response, including a user-friendly error message.
+  All other HTTP exceptions are returned with their default status code and detail.
+  Args:
+    request (Request): The incoming HTTP request.
+    exc (StarletteHTTPException): The HTTP exception raised during request processing.
+  Returns:
+    JSONResponse: A JSON response with appropriate status code and error details.
+  """
   if exc.status_code == 404 and exc.detail == "Not Found":
     return JSONResponse(
       status_code=404,
