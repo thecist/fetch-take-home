@@ -3,8 +3,6 @@ from datetime import date, time
 from ...helper_module import *
 from ...model import Item
 
-# TODO: Add tests for type checking and error handling
-
 def test_count_alphanumeric():
   assert calculate_retailer_points("M&M Market123") == 11
   with pytest.raises(TypeError):
