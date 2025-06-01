@@ -10,6 +10,18 @@ from typing import List, Pattern
 from pydantic import BaseModel, Field, ConfigDict
 
 class Item(BaseModel):
+  """
+  Represents an item with a short description and price.
+  Attributes:
+    short_description (str): The Short Product Description for the item.
+      - Must match the pattern: ^[\w\s\-]+$
+      - Example: "Mountain Dew 12PK"
+      - Alias: 'shortDescription'
+    price (str): The total price paid for this item.
+      - Must match the pattern: ^\d+\.\d{2}$
+      - Example: "6.49"
+  """
+
   short_description: str = Field(
     ...,
     description='The Short Product Description for the item.',
@@ -29,6 +41,16 @@ class Item(BaseModel):
 
 
 class Receipt(BaseModel):
+  """
+  Represents a purchase receipt with details about the retailer, purchase date and time, items bought, and total amount.
+  Attributes:
+    retailer (str): The name of the retailer or store the receipt is from. Must match the pattern '^[\w\s\-&]+$'.
+    purchase_date (date): The date of the purchase printed on the receipt. Uses the alias 'purchaseDate'.
+    purchase_time (time): The time of the purchase printed on the receipt in 24-hour format. Uses the alias 'purchaseTime'.
+    items (List[Item]): A list of items purchased. Must contain at least one item.
+    total (str): The total amount paid on the receipt, formatted as a string with two decimal places (e.g., "6.49").
+  """
+
   retailer: str = Field(
     ...,
     description='The name of the retailer or store the receipt is from.',
@@ -57,6 +79,13 @@ class Receipt(BaseModel):
   model_config = ConfigDict(populate_by_name=True)
 
 class ReceiptProcessResponse(BaseModel):
+  """
+  Response model representing the result of processing a receipt.
+  Attributes:
+    id (str): The ID assigned to the receipt. Must be a non-whitespace string.
+      Example: "adb6b560-0eef-42bc-9d16-df48f30e89b2"
+  """
+
   id: str = Field(
     ...,
     description='The ID assigned to the receipt.',
@@ -65,6 +94,12 @@ class ReceiptProcessResponse(BaseModel):
   )
 
 class ReceiptPointResponse(BaseModel):
+  """
+  Represents the response model for receipt points.
+  Attributes:
+    points (int): The number of points awarded. Example: 100.
+  """
+
   points: int = Field(
     ...,
     description='The number of points awarded.',
