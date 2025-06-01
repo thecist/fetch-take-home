@@ -6,7 +6,7 @@ from pathlib import Path
   "receipt1.json", "receipt2.json", "receipt3.json", "receipt4.json"
 ])
 def test_process_and_get_points(client, file_name):
-  file_path = Path("receipts") / file_name
+  file_path = Path(__file__).resolve().parents[4] / "receipts" / file_name
   with open(file_path) as f:
     receipt_data = json.load(f)
 

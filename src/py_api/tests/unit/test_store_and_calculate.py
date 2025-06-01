@@ -7,7 +7,7 @@ from ...model import Receipt, Item
 
 # Utility to load receipt JSON and convert it into a Receipt model
 def load_receipt(file_name):
-  file_path = Path("receipts") / file_name
+  file_path = Path(__file__).resolve().parents[4] / "receipts" / file_name
   with open(file_path) as f:
     raw_data = json.load(f)
     return Receipt(
