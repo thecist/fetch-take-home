@@ -19,8 +19,8 @@ import uuid
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi import FastAPI, Path, BackgroundTasks, Request
 from fastapi.responses import JSONResponse
-from .model import Receipt, ReceiptProcessResponse, ReceiptPointResponse
-from .helper_module import store_and_calculate
+from py_api.model import Receipt, ReceiptProcessResponse, ReceiptPointResponse
+from py_api.helper_module import store_and_calculate
 
 app = FastAPI(
   title="Receipt Processor",
@@ -31,7 +31,7 @@ app = FastAPI(
     "github": "https://github.com/tayomide"
   }
 )
-PORT = int(os.getenv("PORT", 8000))
+PORT = int(os.getenv("PORT", 3000))
 
 # In-memory storage for receipts and their points
 # Note: In a production environment, I would use a database and redis for cache
@@ -129,6 +129,8 @@ async def custom_http_exception_handler(request: Request, exc: StarletteHTTPExce
   # For all other exceptions, return the default error response
   return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
 
+def main():
+  uvicorn.run("py_api.app:app", host="0.0.0.0", port=PORT, reload=True)
 
 if __name__ == "__main__":
-  uvicorn.run("app:app", host="0.0.0.0", port=PORT, reload=True)
+  main()
