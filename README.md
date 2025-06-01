@@ -133,9 +133,10 @@ I have recently fallen in love with the almost too perfect mix of FastAPI,
 Pydantic, Swagger, and OpenAPI. Sadly, I am not familiar enough with python to
 survive a 5 hours collboarative coding session.
 
-My current submission(with hash)
-will be in python, but during the review time, I will be working on a replica
-using JavaScript. The structure will be similar with the ony diffence being you
-will need to add `RUNTIME=js` to the `.env` file to run the JavaScript version
-
-Python's FastAPI was the best choice for this project
+My current submission(with hash) will be in python as it is the best choice
+considering the assessment requirements, but during the review time, I will be
+working on a replica using JavaScript(the language I am most familiar with). The
+structure will be similar with the ony diffence being you will need to add
+`RUNTIME=js` to the `.env` file to run the JavaScript version. The purpose of
+the rewrite is to both showcase my JavaScript skills and provide a more familiar
+codebase for us to work on together during the next stage.
