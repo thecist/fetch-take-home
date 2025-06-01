@@ -14,9 +14,11 @@ if ! [[ "$PORT" =~ ^[0-9]+$ ]]; then
   export PORT=3000
 fi
 
-if [ "$RUNTIME" != "python" ]; then
+DEFAULT_RUNTIME="python"
+
+if [ "$RUNTIME" != "python" ] && [ "$RUNTIME" != "js" ]; then
   echo "Defaulting to JavaScript runtime"
-  export RUNTIME=js
+  export RUNTIME="$DEFAULT_RUNTIME"
 fi
 
 # Set up the API
