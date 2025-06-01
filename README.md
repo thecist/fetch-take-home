@@ -1,6 +1,6 @@
 ## Project Overview
 
-This is a FastAPI-based receipt reward system with built-in testing and automatic scoring logic.
+This is a completion of Fetch's take home assessment, given on 5/29/2025.
 
 ---
 
