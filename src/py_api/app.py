@@ -19,8 +19,8 @@ import uuid
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi import FastAPI, Path, BackgroundTasks, Request
 from fastapi.responses import JSONResponse
-from model import Receipt, ReceiptProcessResponse, ReceiptPointResponse
-from helper_module import store_and_calculate
+from .model import Receipt, ReceiptProcessResponse, ReceiptPointResponse
+from .helper_module import store_and_calculate
 
 app = FastAPI(
   title="Receipt Processor",

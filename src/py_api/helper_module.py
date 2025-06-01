@@ -1,4 +1,4 @@
-from model import Receipt, Item
+from .model import Receipt, Item
 from typing import List
 from math import ceil, floor
 from datetime import date, time
