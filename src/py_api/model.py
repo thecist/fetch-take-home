@@ -7,62 +7,66 @@ from datetime import date, time
 # correctly in the Field pattern argument.
 from typing import List, Pattern
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 class Item(BaseModel):
   short_description: str = Field(
     ...,
     description='The Short Product Description for the item.',
-    example='Mountain Dew 12PK',
     pattern=r'^[\w\s\-]+$',
-    alias='shortDescription'
+    alias='shortDescription',
+    json_schema_extra={
+      "example": "Mountain Dew 12PK"
+    }
   )
   price: str = Field(
     ...,
     description='The total price payed for this item.',
-    example='6.49',
-    pattern=r'^\d+\.\d{2}$'
+    pattern=r'^\d+\.\d{2}$',
+    json_schema_extra={"example": "6.49"}
   )
+  model_config = ConfigDict(populate_by_name=True)
 
 
 class Receipt(BaseModel):
   retailer: str = Field(
     ...,
     description='The name of the retailer or store the receipt is from.',
-    example='M&M Corner Market',
-    pattern=r'^[\w\s\-&]+$'
+    pattern=r'^[\w\s\-&]+$',
+    json_schema_extra={"example": "M&M Corner Market"}
   )
   purchase_date: date = Field(
     ...,
     description='The date of the purchase printed on the receipt.',
-    example='2022-01-01',
-    alias='purchaseDate'
+    alias='purchaseDate',
+    json_schema_extra={"example": "2022-01-01"}
   )
   purchase_time: time = Field(
     ...,
     description='The time of the purchase printed on the receipt. 24-hour time expected.',
-    example='13:01',
-    alias='purchaseTime'
+    alias='purchaseTime',
+    json_schema_extra={"example": "13:01"}
   )
-  items: List[Item] = Field(..., min_items=1)
+  items: List[Item] = Field(..., min_length=1)
   total: str = Field(
     ...,
     description='The total amount paid on the receipt.',
-    example='6.49',
-    pattern=r'^\d+\.\d{2}$'
+    pattern=r'^\d+\.\d{2}$',
+    json_schema_extra={"example": "6.49"}
   )
+  model_config = ConfigDict(populate_by_name=True)
 
 class ReceiptProcessResponse(BaseModel):
   id: str = Field(
     ...,
     description='The ID assigned to the receipt.',
-    example='adb6b560-0eef-42bc-9d16-df48f30e89b2',
-    pattern=r'^\S+$'
+    pattern=r'^\S+$',
+    json_schema_extra={"example": "adb6b560-0eef-42bc-9d16-df48f30e89b2"}
   )
 
 class ReceiptPointResponse(BaseModel):
   points: int = Field(
     ...,
     description='The number of points awarded.',
-    example=100
+    json_schema_extra={"example": 100}
   )
