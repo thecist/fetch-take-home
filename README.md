@@ -24,8 +24,6 @@ Open the VS Code command palette
 (usually `Ctrl+Shift+P` or `Cmd+Shift+P` on Mac) and run:
 `>Dev Containers: Rebuild Without Cache and Reopen in Container`
 
-```bash
-
 > **If the terminal running the API is accidentally closed:**
 
 ```bash
