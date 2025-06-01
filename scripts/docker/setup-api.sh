@@ -14,6 +14,8 @@ if ! [[ "$PORT" =~ ^[0-9]+$ ]]; then
   export PORT=3000
 fi
 
+# Set default runtime to Python unless explicitly specified
+# Only accepts "python" or "js"
 DEFAULT_RUNTIME="python"
 
 if [ "$RUNTIME" != "python" ] && [ "$RUNTIME" != "js" ]; then
@@ -24,13 +26,20 @@ fi
 # Set up the API
 echo "Setting up API..."
 
+# Install Node.js dependencies for the JS API
 cd src/js-api && npm install
+
+# Install Python dependencies for the Python API
 cd ../../src/py_api && python -m pip install -r requirements-dev.txt
 
+# Go back to project root
 cd ../../
 
+# Launch the correct runtime environment
 if [ "$RUNTIME" = "python" ]; then
+  # Start the Python API
   exec ./scripts/docker/start-py.sh
 else
+  # Start the JavaScript API
   exec ./scripts/docker/start-js.sh
 fi
